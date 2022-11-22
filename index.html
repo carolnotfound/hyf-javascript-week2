@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Hello HTML - exercise 2</title>
+  <meta name="description" content="Our first page">
+  <meta name="keywords" content="html tutorial template">
+</head>
+
+<body>
+  <strong>Type: </strong>
+  <select id="filterType">
+    <option value=""></option>
+    <option value="House">House</option>
+    <option value="Apartment">Apartment</option>
+    <option value="Shed">Shed</option>
+    <option value="Dorm">Dorm</option>
+    <option value="Farm">Farm</option>
+  </select>
+
+  <strong>Facilities: </strong>
+  <select id="filterFacilities">
+    <option value=""></option>
+    <option value="Parkering">Parkering</option>
+    <option value="Elevator">Elevator</option>
+    <option value="Altan">Altan</option>
+    <option value="Have">Have</option>
+    <option value="Husdyr">Husdyr</option>
+  </select>
+
+  <strong>Garden: </strong>
+  <select id="filterGarden">
+    <option value=""></option>
+    <option value="true">Yes</option>
+    <option value="false">No</option>
+  </select>
+
+  <strong>Min Size: </strong>
+  <input type="number" value="" id="filterMinSize" step="10">
+
+  <strong>Max Size: </strong>
+  <input type="number" value="" id="filterMaxSize" step="10">
+
+  <div id="listings"></div>
+  <script type="text/javascript" src='listings.js'></script>
+</body>
+
+</html>
