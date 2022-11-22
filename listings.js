@@ -39,7 +39,7 @@ const generateListings = (numberOfListings) => {
 // Get DOM elements
 const filterType = document.querySelector('#filterType');
 const filterFacilities = document.querySelector('#filterFacilities');
-const filterGarden = document.querySelector('#filterGarden');
+const filterHasGarden = document.querySelector('#filterHasGarden');
 const filterMinSize = document.querySelector('#filterMinSize');
 const filterMaxSize = document.querySelector('#filterMaxSize');
 
@@ -47,7 +47,7 @@ const filterMaxSize = document.querySelector('#filterMaxSize');
 const filter = {
   type: filterType.value,
   facilities: filterFacilities.value,
-  hasGarden: filterGarden.value,
+  hasGarden: filterHasGarden.value,
   minSize: filterMinSize.value,
   maxSize: filterMaxSize.value,
 };
@@ -70,8 +70,10 @@ filterFacilities.addEventListener('change', () => {
   renderListings(filteredListings);
 });
 
-filterGarden.addEventListener('change', () => {
-  filter.hasGarden = filterGarden.value.toString() === 'true';
+filterHasGarden.addEventListener('change', () => {
+  const filterIsEmpty = filterHasGarden.value === '';
+
+  filter.hasGarden = filterIsEmpty ? '' : filterHasGarden.value.toString() === 'true';
 
   const filteredListings = filterListings(listings, filter);
 
@@ -114,36 +116,36 @@ const listingAttendsRequirements = (listing, filter) => {
   const mapFilterSettings = {
     type: {
       listingKey: 'type',
-      callback: compareStrings
+      comparisonMethod: compareStrings
     },
     facilities: {
       listingKey: 'facilities',
-      callback: compareArray
+      comparisonMethod: compareArray
     },
     hasGarden: {
       listingKey: 'hasGarden',
-      callback: compareBoolean
+      comparisonMethod: compareBoolean
     },
     minSize: {
       listingKey: 'size',
-      callback: compareHigherNumber
+      comparisonMethod: compareHigherNumber
     },
     maxSize: {
       listingKey: 'size',
-      callback: compareSmallerNumber
+      comparisonMethod: compareSmallerNumber
     },
   }
 
   filterKeys.forEach(key => {
     if (filter[key] !== '') {
       const listingKey = mapFilterSettings[key].listingKey;
-      const callback = mapFilterSettings[key].callback;
+      const compare = mapFilterSettings[key].comparisonMethod;
 
-      // The callback translates to e.g.:
+      // The compare function translates to e.g.:
       // compareStrings(listing.type, filter.type)
       // compareArray(listing.facilities, filter.facilities)
       // ...
-      const valuesAreEqual = callback(listing[listingKey], filter[key]);
+      const valuesAreEqual = compare(listing[listingKey], filter[key]);
 
       if (!valuesAreEqual) {
         includeListing = false;
